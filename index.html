@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Click Prophecy</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><radialGradient id='grad' cx='30%' cy='30%'><stop offset='0%' stop-color='%23ffffff' stop-opacity='0.8'/><stop offset='50%' stop-color='%234a90e2' stop-opacity='0.6'/><stop offset='100%' stop-color='%231a1a2e' stop-opacity='1'/></radialGradient></defs><circle cx='50' cy='50' r='45' fill='url(%23grad)' stroke='%2300ff00' stroke-width='2'/><circle cx='35' cy='35' r='8' fill='%23ffffff' opacity='0.7'/><path d='M30 60 Q50 45 70 60' stroke='%2300ffff' stroke-width='2' fill='none' opacity='0.8'/></svg>" type="image/svg+xml">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            background-color: #0a0a0a;
+            color: #00ff00;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .terminal {
+            background-color: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 8px;
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.1);
+            position: relative;
+        }
+        
+        .terminal::before {
+            content: "●●●";
+            position: absolute;
+            top: 12px;
+            left: 20px;
+            color: #ff5555;
+            font-size: 20px;
+            letter-spacing: 8px;
+        }
+        
+        .terminal-header {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .main-text {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin: 40px 0;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+            }
+        }
+        
+        .cursor {
+            display: inline-block;
+            background-color: #00ff00;
+            width: 12px;
+            height: 24px;
+            margin-left: 5px;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .clickable {
+            color: #00ddff;
+            cursor: pointer;
+            text-decoration: underline;
+            transition: all 0.3s ease;
+        }
+        
+        .clickable:hover {
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(0, 221, 255, 0.8);
+        }
+        
+        .money-counter {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 18px;
+            color: #ffff00;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <div class="terminal-header">
+            user@terminal:~$ click prophecy.txt
+        </div>
+        
+
+        
+        <div class="main-text">
+            According to prophecy, when you <span class="clickable" onclick="makeMoney()">click</span> things, you can make money.
+            <span class="cursor"></span>
+        </div>
+        
+        <div class="footer">
+            [prophecy successfully loaded]
+        </div>
+    </div>
+    
+    <script>
+        let money = 0;
+        
+        function makeMoney() {
+            money += Math.random() * 10 + 1;
+            document.getElementById('moneyCount').textContent = money.toFixed(2);
+            
+            // Add a little visual feedback
+            const clickable = document.querySelector('.clickable');
+            clickable.style.transform = 'scale(1.1)';
+            setTimeout(() => {
+                clickable.style.transform = 'scale(1)';
+            }, 150);
+        }
+        
+        // Easter egg: click anywhere else for smaller amounts
+        document.addEventListener('click', function(e) {
+            if (!e.target.classList.contains('clickable')) {
+                money += Math.random() * 0.5;
+                document.getElementById('moneyCount').textContent = money.toFixed(2);
+            }
+        });
+    </script>
+</body>
+</html>
